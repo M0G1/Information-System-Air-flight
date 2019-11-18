@@ -3,8 +3,10 @@ package flight;
 import airport.Airport;
 import plane.Plane;
 
+import java.lang.reflect.Field;
 import java.time.DateTimeException;
 import java.util.Date;
+import java.util.UUID;
 
 public class Flight {
     private Plane plane;
@@ -15,6 +17,7 @@ public class Flight {
     private Date dateDeparture;         //дата отправления рейса
     private Date dateArrival;           //дата прибытия рейса
 
+    private UUID id;                    //уникальный индендификатор
 
 //=======================================Checks===================================
 
@@ -31,7 +34,7 @@ public class Flight {
 
     private void checkDate(Date date, String fieldName) throws DateTimeException {
         Date current = new Date(System.currentTimeMillis());
-        if (dateArrival.before(current))
+        if (date.before(current))
             throw new DateTimeException(String.format("%s(%s) is before current moment", fieldName, date.toString()));
     }
 
@@ -60,6 +63,7 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
         this.dateDeparture = dateDeparture;
         this.dateArrival = dateArrival;
+        this.id = UUID.randomUUID();
     }
 
 //=======================================Getters===================================
@@ -84,7 +88,11 @@ public class Flight {
         return dateArrival;
     }
 
-//=======================================Setters===================================
+    public UUID getId() {
+        return id;
+    }
+
+    //=======================================Setters===================================
 
 
     public void setPlane(Plane plane) throws NullPointerException {
@@ -115,5 +123,58 @@ public class Flight {
         checkOnNull(dateArrival, "dateArrival");
         checkDates(this.dateDeparture, dateArrival);
         this.dateArrival = dateArrival;
+    }
+
+
+//=======================================Object===================================
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Flight))
+            return false;
+        Flight flight = (Flight) obj;
+        //объект равен, если все его атрибуты равны. Начнем с id потому что это уникальное значение
+        return (flight.id.compareTo(this.id) == 0) &&
+                flight.plane.equals(this.plane) &&
+                flight.departureAirport.equals(this.departureAirport) &&
+                flight.arrivalAirport.equals(this.arrivalAirport) &&
+                flight.dateDeparture.equals(this.dateDeparture) &&
+                flight.dateArrival.equals(this.dateArrival);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Flight obj = (Flight) super.clone();
+//        obj.plane = (Plane) this.plane.clone();
+//        obj.departureAirport = (Airport)this.departureAirport.clone();
+//        obj.arrivalAirport = (Airport)this.arrivalAirport.clone();
+        obj.dateDeparture = (Date) this.dateDeparture.clone();
+        obj.dateArrival = (Date) this.dateArrival.clone();
+        //Нужен ли новый id для клона? Или этот сойдет?
+        obj.id = UUID.fromString(this.id.toString());
+        return obj;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("Flight( ");
+        //Приводим к строковому представлению все поля кроме id
+        Object[] fields = {this.plane,
+                this.departureAirport, this.arrivalAirport,
+                this.dateDeparture, this.dateArrival
+        };
+        for (int i = 0; i < fields.length; ++i) {
+            str.append(fields[i].toString());
+            if (i != fields.length - 1)
+                str.append(", ");
+        }
+        str.append(')');
+        return str.toString();
     }
 }

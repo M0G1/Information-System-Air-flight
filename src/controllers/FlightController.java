@@ -14,11 +14,6 @@ public class FlightController {
     /*Нужно будет реализовать синглетон для листа и контроллера*/
     private static FlightList list;
 
-    /*Статический блок иницилизации для создания списка рейсов. Для корректной работы.
-     * Добавлю потом чтение из файла(БД мб потом) */
-    static {
-        list = new FlightList();
-    }
 
 
     public static Flight createFlight(Plane plane,

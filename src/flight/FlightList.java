@@ -13,6 +13,8 @@ import java.util.List;
 public class FlightList implements Iterable<Flight> {
     private List<Flight> flightList;
 
+    /*Статический блок иницилизации для создания списка рейсов. Для корректной работы.
+     * Добавлю потом чтение из файла(БД мб потом) */
     {
         flightList = new ArrayList<>();
     }
