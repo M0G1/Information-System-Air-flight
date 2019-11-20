@@ -16,8 +16,8 @@ public class Main {
 
     public static void testFlightPlane() {
         //подготовительные действия для создания объекта Flight
-        Airport departureAirport = new Airport(),
-                arrivalAirport = new Airport();
+        Airport departureAirport = new Airport("Kurumoch"),
+                arrivalAirport = new Airport("Smishlyaevka-2");
         Plane plane = new Plane();
         //форматированное чтение даты, формат задается строкой \/
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");

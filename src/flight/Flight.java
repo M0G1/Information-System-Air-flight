@@ -5,6 +5,7 @@ import plane.Plane;
 
 import java.lang.reflect.Field;
 import java.time.DateTimeException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -131,7 +132,24 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int hash = 31;
+        Long[] longID = {
+                this.id.getLeastSignificantBits(),
+                this.id.getMostSignificantBits()
+        };
+        Date[] dates = {
+                this.dateDeparture,
+                this.dateArrival
+        };
+        Airport[] airports = {
+                this.departureAirport,
+                this.arrivalAirport
+        };
+        Object[] fields = {longID, dates, airports};
+        hash += this.plane.hashCode();
+        hash += Arrays.deepHashCode(fields);
+        hash += Arrays.hashCode(dates);
+        return hash;
     }
 
     @Override
