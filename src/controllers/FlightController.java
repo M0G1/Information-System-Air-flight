@@ -12,8 +12,7 @@ import java.util.function.Predicate;
 
 public class FlightController {
     /*Нужно будет реализовать синглетон для листа и контроллера*/
-    private static FlightList list;
-
+    private static FlightList list = new FlightList();
 
 
     public static Flight createFlight(Plane plane,
@@ -28,10 +27,14 @@ public class FlightController {
 
 //=======================================Getters===================================
 
+    public static FlightList getList(){
+        return list;
+    }
+
     /**
      * Предикат - функция ставящая набору целочисленных аргументов булевское значение.
      * Проход по списку с выбором элементов по условию преликата.
-     * @return список с элементами удовлетворяющими предиату
+     * @return список с элементами удовлетворяющими предикату
      */
     public static List<Flight> getIf(Predicate<Flight> predicate) {
         ArrayList<Flight> answer = new ArrayList<>();
@@ -47,7 +50,7 @@ public class FlightController {
      * совершаться после определенного времени.
      * Сравнивается по времени вылета.
      */
-    public static List<Flight> getFlightsAfterDepartureDate(Date dateDeparture) {
+    public static List<Flight> getAfterDepartureDate(Date dateDeparture) {
         /*Анонимный класс (описывает абстрактный класс или полностью абстрактный класс(интерфейс)
           со всеми его методами без создания его в отдельном файле(для количества переопределяемых методов больше чем 1))*/
         Predicate<Flight> predicate = new Predicate<Flight>() {
@@ -65,7 +68,7 @@ public class FlightController {
      * вылетать из определенного аэропорта.
      * Сравнивается по времени вылета и аэропорту вылета.
      */
-    public static List<Flight> getFlightsAfterDepartureDate(Date dateDeparture, Airport departureAirport) {
+    public static List<Flight> getAfterDepartureDate(Date dateDeparture, Airport departureAirport) {
         //лямбда функции(когда в интерфейсе надо переопределить один метод, то так проще(меньше кода))
         //добавить рейс, если дата вылета после ОПРЕДЕЛЕННОЙ даты и аэропорт вылета равен Запрашиваему
         Predicate<Flight> predicate = (flight) ->
@@ -80,7 +83,7 @@ public class FlightController {
      * прилетать в определенный аэропорт.
      * Сравнивается по времени вылета и аэропорту вылета и назначения.
      */
-    public static List<Flight> getFlightsAfterDepartureDate(Date dateDeparture, Airport departureAirport, Airport arrivalAirport) {
+    public static List<Flight> getAfterDepartureDate(Date dateDeparture, Airport departureAirport, Airport arrivalAirport) {
         //лямбда функции(когда в интерфейсе надо переопределить один метод, то так проще(меньше кода))
         /*добавить рейс, если дата вылета после ОПРЕДЕЛЕННОЙ даты и
               аэропорт вылета равен Запрашиваему аэропорту вылета

@@ -1,17 +1,21 @@
 
 import airport.Airport;
+import controllers.FlightController;
 import flight.Flight;
 import plane.Plane;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
         //нажмите два раза ctrl + Q, наведя на объект курсор, чтобы увидеть документацию класса в среде разработки
-        testFlightPlane();
+        //testFlightPlane();
+        testFlightController();
     }
 
     public static void testFlightPlane() {
@@ -31,8 +35,58 @@ public class Main {
             e.printStackTrace();
             return;
         }
-        Flight flight = new Flight(plane, departureAirport, arrivalAirport, dateDeparture, dateArrival);
-        //Проверки работы объекта
-        System.out.println(flight.toString());
+        Flight flight1 = new Flight(plane, departureAirport, arrivalAirport, dateDeparture, dateArrival);
+        try {
+            System.out.println("flight1.equals(flight1) " + flight1.equals(flight1));
+            System.out.println("flight1.hashCode() " + flight1.hashCode());
+            //System.out.println("" + flight1.);
+            //Проверки работы объекта
+            System.out.println(flight1.toString());
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName());
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void fillFlightListInController() {
+
+    }
+
+    public static void testFlightController() {
+
+        Airport[] airports = {new Airport("A"),
+                new Airport("B"),
+                new Airport("C"),
+                new Airport("D"),
+                new Airport("E"),
+                new Airport("F")
+        };
+        Random rnd = new Random();
+        long currTime = System.currentTimeMillis();
+        System.out.println(((new Date(currTime)).toString()));
+        for (int i = 0; i < airports.length - 1; ++i) {
+
+            Date departure = new Date(currTime + 1000L * 60L * 60L * (1L + (long) rnd.nextInt(1000))),
+                    arrival = new Date(departure.getTime() + 1000L * 60L * 60L * (1L + (long) rnd.nextInt(1000)));
+            FlightController.createFlight(new Plane(), airports[i], airports[i + 1], departure, arrival);
+        }
+
+        Date departureDate = new Date(currTime + 1000L * 60L * 60L * (1L + (long)rnd.nextInt(100))),
+                arrivalDate = new Date(departureDate.getTime() + 1000L * 60L * 60L * (500L + (long) rnd.nextInt(500)));
+        System.out.println("arrivalDate: " + arrivalDate.toString() + " m: " + arrivalDate.getTime());
+        System.out.println("departureDate: " + departureDate.toString() + " m: " + departureDate.getTime());
+
+
+        Object[] beforeArrivalD = FlightController.getBeforeArrivalDate(arrivalDate).toArray();
+        Object[] afterDepartureD = FlightController.getAfterDepartureDate(departureDate).toArray();
+
+        System.out.println("beforeArrivalD: \n" + Arrays.toString(beforeArrivalD));
+        System.out.println("afterDepartureD: \n" + Arrays.toString(afterDepartureD));
+
+        System.out.println( "FlightList: ");
+        for(Flight f : FlightController.getList()){
+            System.out.println(f.toString());
+        }
     }
 }

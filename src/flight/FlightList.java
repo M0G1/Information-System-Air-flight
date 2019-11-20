@@ -14,12 +14,11 @@ public class FlightList implements Iterable<Flight> {
     private List<Flight> flightList;
 
     /*Статический блок иницилизации для создания списка рейсов. Для корректной работы.
-     * Добавлю потом чтение из файла(БД мб потом) */
-    {
+     * Добавлю потом чтение из файла(БД мб потом) */ {
         flightList = new ArrayList<>();
     }
 
-    private FlightList() {
+    public FlightList() {
     }
 
     public Flight get(int index) {
@@ -41,6 +40,10 @@ public class FlightList implements Iterable<Flight> {
 
     public int size() {
         return flightList.size();
+    }
+
+    public Object[] toArray() {
+        return flightList.toArray();
     }
 
     @Override

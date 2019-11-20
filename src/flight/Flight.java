@@ -167,7 +167,7 @@ public class Flight {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Flight obj = (Flight) super.clone();
 //        obj.plane = (Plane) this.plane.clone();
 //        obj.departureAirport = (Airport)this.departureAirport.clone();
