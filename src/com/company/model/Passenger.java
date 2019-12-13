@@ -1,6 +1,6 @@
-package Model;
+package com.company.model;
 
-import Model.Passport;
+import com.company.model.Passport;
 import java.util.UUID;
 import java.io.Serializable;
 

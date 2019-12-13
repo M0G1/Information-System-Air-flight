@@ -1,7 +1,9 @@
-package Model;
+package com.company.model;
 
 import java.io.Serializable;
 
+
+//написать экьюалс
 public class Passport implements Serializable {
     private String number;//сделать стрингом
     //разбить на фам имя отчество

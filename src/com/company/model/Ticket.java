@@ -1,4 +1,4 @@
-package Model;
+package com.company.model;
 
 import java.util.UUID;
 import java.io.Serializable;
