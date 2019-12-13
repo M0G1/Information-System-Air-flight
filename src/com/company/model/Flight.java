@@ -1,7 +1,4 @@
-package flight;
-
-import airport.Airport;
-import plane.Plane;
+package com.company.model;
 
 import java.time.DateTimeException;
 import java.util.Date;
@@ -47,7 +44,7 @@ public class Flight {
     public Flight(Plane plane,
                   Airport departureAirport, Airport arrivalAirport,
                   Date dateDeparture, Date dateArrival) throws NullPointerException, IllegalArgumentException, DateTimeException {
-        checkOnNull(plane, "plane");
+        checkOnNull(plane, "com/company/plane");
         checkOnNull(departureAirport, "departureAirport");
         checkOnNull(arrivalAirport, "arrivalAirport");
         checkOnNull(dateDeparture, "dateDeparture");
@@ -88,7 +85,7 @@ public class Flight {
 
 
     public void setPlane(Plane plane) throws NullPointerException {
-        checkOnNull(plane, "plane");
+        checkOnNull(plane, "com/company/plane");
         this.plane = plane;
     }
 

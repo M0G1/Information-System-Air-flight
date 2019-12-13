@@ -1,6 +1,7 @@
+package com.company;
 
-import flight.Flight;
-import plane.Plane;
+
+import com.company.model.Flight;
 
 public class Main {
 
