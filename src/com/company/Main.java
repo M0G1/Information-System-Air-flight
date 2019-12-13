@@ -1,8 +1,9 @@
 
-import airport.Airport;
-import controllers.FlightController;
-import flight.Flight;
-import plane.Plane;
+
+import com.company.controllers.FlightController;
+import com.company.model.Airport;
+import com.company.model.Flight;
+import com.company.model.Plane;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

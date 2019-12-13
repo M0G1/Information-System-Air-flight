@@ -1,4 +1,4 @@
-package airport;
+package com.company.model;
 
 import java.util.UUID;
 

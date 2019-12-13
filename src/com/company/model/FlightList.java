@@ -1,4 +1,4 @@
-package flight;
+package com.company.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;

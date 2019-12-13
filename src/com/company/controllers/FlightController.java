@@ -1,9 +1,9 @@
-package controllers;
+package com.company.controllers;
 
-import airport.Airport;
-import flight.Flight;
-import flight.FlightList;
-import plane.Plane;
+import com.company.model.Airport;
+import com.company.model.Flight;
+import com.company.model.FlightList;
+import com.company.model.Plane;
 
 import java.util.ArrayList;
 import java.util.Date;
