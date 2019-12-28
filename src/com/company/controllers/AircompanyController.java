@@ -6,7 +6,7 @@ public class AircompanyController implements Serializable, Controller {
 
     public AircompanyController () {}
 
-    @Override public void refreshModelData(File file, Object aircompanies) throws IOException {
+    public void refreshModelData(File file, Object aircompanies) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
         objectOutputStream.writeObject(aircompanies);
         objectOutputStream.close();

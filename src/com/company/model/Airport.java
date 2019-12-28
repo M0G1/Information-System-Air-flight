@@ -1,16 +1,17 @@
 package com.company.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Airport {
+public class Airport implements Serializable {
     private String name;
     private UUID id;
 
 
 //=======================================Object===================================
 
-    public Airport(String AirportName){
-        this.name = AirportName;
+    public Airport(String airportName){
+        this.name = airportName;
         this.id = UUID.randomUUID();
     }
 

@@ -5,43 +5,37 @@ import com.company.controllers.Repository;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * Для работы использовать FlightController.
- * Класс будет хранить все существующие рейсы,
- * осуществлять методы доступа,
- * сохраянять и загружать список рейсов.
- */
-public class FlightList implements Serializable, List<Flight> {
+public class AirportList implements Serializable, List<Airport> {
     /*
         transient модификатор доступа, чтобы не сериализовалось.
-        Потому что иначе при сериализации FlightList ему нужно сериализовать FlightList((подсказка)бесконечная рекурсия )
+        Потому что иначе при сериализации AirportList ему нужно сериализовать AirportList((подсказка)бесконечная рекурсия )
     */
-    private static transient FlightList uniqueInstance = null;
-    private List<Flight> flightList;
+    private static transient AirportList uniqueInstance = null;
+    private List<Airport> airportList;
 
     /*Статический блок иницилизации для создания списка рейсов. Для корректной работы.
      * Добавлю потом чтение из файла(БД мб потом) */ {
-        flightList = new ArrayList<>();
+        airportList = new ArrayList<>();
     }
 
-    private FlightList() {
+    private AirportList() {
     }
 
-    public static FlightList getInstance() {
+    public static AirportList getInstance() {
         if (uniqueInstance == null)
-            uniqueInstance = new FlightList();
+            uniqueInstance = new AirportList();
         return uniqueInstance;
     }
 
     //========================================== Methods of List ======================================================
 
-    public Flight get(int index) {
-        return flightList.get(index);
+    public Airport get(int index) {
+        return airportList.get(index);
     }
 
 
-    public boolean add(Flight flight) {
-        boolean ans = flightList.add(flight),
+    public boolean add(Airport flight) {
+        boolean ans = airportList.add(flight),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -50,8 +44,8 @@ public class FlightList implements Serializable, List<Flight> {
         return ans && upd;
     }
 
-    public boolean remove(Flight flight) {
-        boolean ans = flightList.remove(flight),
+    public boolean remove(Airport flight) {
+        boolean ans = airportList.remove(flight),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -60,8 +54,8 @@ public class FlightList implements Serializable, List<Flight> {
         return ans && upd;
     }
 
-    public Flight remove(int index) {
-        Flight temp = flightList.remove(index);
+    public Airport remove(int index) {
+        Airport temp = airportList.remove(index);
         if (temp != null)
             if (Repository.updateRepos())
                 return temp;
@@ -70,36 +64,36 @@ public class FlightList implements Serializable, List<Flight> {
     }
 
     public int size() {
-        return flightList.size();
+        return airportList.size();
     }
 
     public Object[] toArray() {
-        return flightList.toArray();
+        return airportList.toArray();
     }
 
     @Override
     public boolean isEmpty() {
-        return flightList.isEmpty();
+        return airportList.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return flightList.contains(o);
+        return airportList.contains(o);
     }
 
     @Override
-    public Iterator<Flight> iterator() {
-        return flightList.iterator();
+    public Iterator<Airport> iterator() {
+        return airportList.iterator();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return (T[]) flightList.toArray();
+        return (T[]) airportList.toArray();
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean ans = flightList.remove(o),
+        boolean ans = airportList.remove(o),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -110,12 +104,12 @@ public class FlightList implements Serializable, List<Flight> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return flightList.containsAll(c);
+        return airportList.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Flight> c) {
-        boolean ans = flightList.addAll(c),
+    public boolean addAll(Collection<? extends Airport> c) {
+        boolean ans = airportList.addAll(c),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -125,8 +119,8 @@ public class FlightList implements Serializable, List<Flight> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Flight> c) {
-        boolean ans = flightList.addAll(index, c),
+    public boolean addAll(int index, Collection<? extends Airport> c) {
+        boolean ans = airportList.addAll(index, c),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -137,7 +131,7 @@ public class FlightList implements Serializable, List<Flight> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean ans = flightList.removeAll(c),
+        boolean ans = airportList.removeAll(c),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -148,7 +142,7 @@ public class FlightList implements Serializable, List<Flight> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        boolean ans = flightList.retainAll(c),
+        boolean ans = airportList.retainAll(c),
                 upd = false;
         if (ans) {
             upd = Repository.updateRepos();
@@ -159,13 +153,13 @@ public class FlightList implements Serializable, List<Flight> {
 
     @Override
     public void clear() {
-        flightList.clear();
+        airportList.clear();
         boolean upd = Repository.updateRepos();
     }
 
     @Override
-    public Flight set(int index, Flight element) {
-        Flight temp = flightList.set(index, element);
+    public Airport set(int index, Airport element) {
+        Airport temp = airportList.set(index, element);
         if (temp != null)
             if (Repository.updateRepos())
                 return temp;
@@ -175,34 +169,33 @@ public class FlightList implements Serializable, List<Flight> {
     }
 
     @Override
-    public void add(int index, Flight element) {
-        flightList.add(index, element);
+    public void add(int index, Airport element) {
+        airportList.add(index, element);
         boolean upd = Repository.updateRepos();
     }
 
     @Override
     public int indexOf(Object o) {
-        return flightList.indexOf(o);
+        return airportList.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return flightList.lastIndexOf(o);
+        return airportList.lastIndexOf(o);
     }
 
     @Override
-    public ListIterator<Flight> listIterator() {
-        return flightList.listIterator();
+    public ListIterator<Airport> listIterator() {
+        return airportList.listIterator();
     }
 
     @Override
-    public ListIterator<Flight> listIterator(int index) {
-        return flightList.listIterator(index);
+    public ListIterator<Airport> listIterator(int index) {
+        return airportList.listIterator(index);
     }
 
     @Override
-    public List<Flight> subList(int fromIndex, int toIndex) {
-        return flightList.subList(fromIndex, toIndex);
+    public List<Airport> subList(int fromIndex, int toIndex) {
+        return airportList.subList(fromIndex, toIndex);
     }
-
 }

@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 public class FlightController {
     /*Нужно будет реализовать синглетон для листа и контроллера*/
-    private static FlightList list = new FlightList();
+    private static FlightList list = FlightList.getInstance();
 
 
     public static Flight createFlight(Plane plane,
@@ -25,15 +25,25 @@ public class FlightController {
         return temp;
     }
 
+    //======================================= Delete/Remove ===================================
+
+    public static boolean removeFlight(Flight flight) {
+        return list.remove(flight);
+    }
+
+    public static Flight removeFlight(int index) {
+        return list.remove(index);
+    }
 //=======================================Getters===================================
 
-    public static FlightList getList(){
+    public static FlightList getList() {
         return list;
     }
 
     /**
      * Предикат - функция ставящая набору целочисленных аргументов булевское значение.
      * Проход по списку с выбором элементов по условию преликата.
+     *
      * @return список с элементами удовлетворяющими предикату
      */
     public static List<Flight> getIf(Predicate<Flight> predicate) {
@@ -107,7 +117,7 @@ public class FlightController {
     }
 
     /**
-     *@return  список рейсов, которые будут
+     * @return список рейсов, которые будут
      * совершены до определенного времени,
      * прилетев в определенный аэропорт.
      * Сравнивается по времени вылета и аэропорту назначения.
@@ -123,7 +133,7 @@ public class FlightController {
     }
 
     /**
-     *@return Возвращает список рейсов, которые будут
+     * @return Возвращает список рейсов, которые будут
      * совершены до определенного времени,
      * вылетев из определенного аэропорта,
      * прилетев в определенный аэропорт.

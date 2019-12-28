@@ -1,12 +1,13 @@
 package com.company.model;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.DateTimeException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
-public class Flight {
+public class Flight implements Serializable {
     private Plane plane;
 
     private Airport departureAirport;     //Пункт отправления
@@ -37,8 +38,9 @@ public class Flight {
     }
 
     private void checkDates(Date dateDeparture, Date dateArrival) throws DateTimeException {
-        checkDate(dateDeparture, "dateDeparture");
-        checkDate(dateArrival, "dateArrival");
+        //ЗАККОМЕНТИРОВАЛ ПРОВЕРКУ НА
+        //checkDate(dateDeparture, "dateDeparture");
+        //checkDate(dateArrival, "dateArrival");
         if (!dateArrival.after(dateDeparture))
             throw new DateTimeException(String.format("dateArrival(%s) is not after dateDeparture(%s)", dateArrival.toString(), dateDeparture.toString()));
     }
