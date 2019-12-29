@@ -4,6 +4,7 @@ import com.company.controllers.AirportController;
 import com.company.controllers.FlightController;
 import com.company.controllers.Repository;
 import com.company.model.*;
+import com.company.view.ConsoleView;
 
 import javax.sound.midi.Soundbank;
 import java.io.*;
@@ -19,7 +20,8 @@ public class Main {
         //testFlightPlane();
         //testFlightController();
         //testSerializableMuslim();
-        reposTest();
+        //reposTest();
+        viewTest();
     }
 
     public static void testFlightPlane() {
@@ -119,20 +121,37 @@ public class Main {
         testFlightController();
         Repository.updateRepos();
         System.out.println("Repos TEST");
-        printList("Airports",AirportList.getInstance(),"\n");
-        printList("Flight",FlightList.getInstance(),"\n");
+        printList("Airports", AirportList.getInstance(), "\n");
+        printList("Flights", FlightList.getInstance(), "\n");
+    }
+
+    public static void viewTest() {
+        System.out.println("Repos upload: " + Repository.uploadRepos());
+        printList("Airports", AirportList.getInstance(), "\n");
+        printList("Flight", FlightList.getInstance(), "\n");
+        for (int i = 0; true; ++i) {
+            System.out.println("Write command or help");
+            Scanner scan = new Scanner(System.in);
+            String fromCons = scan.nextLine();
+            //System.out.println("FromCons " + fromCons);
+            if (fromCons.toLowerCase().equals("f")) {
+                return;
+            }
+            String toCons = ConsoleView.commandReader(fromCons);
+            System.out.println(toCons);
+        }
     }
 
     public static void experiments() {
     }
 
     public static void printList(String listName, List list, String separator) {
-        System.out.println(listName + "{\n");
+        System.out.println(listName + "{");
         for (int i = 0; i < list.size(); ++i) {
             System.out.print(list.get(i));
-            if(i != list.size() - 1)
+            if (i != list.size() - 1)
                 System.out.print(separator);
         }
-        System.out.println();
+        System.out.println("\n}");
     }
 }

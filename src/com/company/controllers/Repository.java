@@ -16,7 +16,7 @@ public class Repository {
             AirportList.getInstance()
     };
 
-    private static File repos = new File("repos.bin");
+    private static File repos = new File("repos.txt");
 
 //=========================================== Get & Set=========================================================
 
@@ -52,9 +52,15 @@ public class Repository {
         try {
             ans = new List[lists.length];
             inObj = new ObjectInputStream(new FileInputStream(repos));
-
+//            ans[0] = (FlightList) inObj.readObject();
+//            inObj.readInt(); //symbol: '\n'
+//            ans[1] = (AirportList) inObj.readObject();
+//            inObj.readInt(); //symbol: '\n'
+            System.out.println(ans[0]);
+            System.out.println(ans[1]);
             for (int i = 0; i < lists.length; ++i) {
                 ans[i] = (List) inObj.readObject();
+                System.out.println(ans[i].size());
                 inObj.readInt(); //symbol: '\n'
             }
             inObj.close();

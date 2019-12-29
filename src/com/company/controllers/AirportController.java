@@ -33,7 +33,6 @@ public class AirportController {
         return list;
     }
 
-
     public static List<Airport> getIf(Predicate<Airport> predicate) {
         ArrayList<Airport> answer = new ArrayList<>();
         for (Airport airport : list) {
@@ -41,5 +40,14 @@ public class AirportController {
                 answer.add(airport);
         }
         return answer;
+    }
+
+    public static Airport find(String airportName){
+        for(Airport airport: list){
+            if(airport.getName().toLowerCase().equals(airportName.toLowerCase())){
+                return airport;
+            }
+        }
+        return null;
     }
 }
