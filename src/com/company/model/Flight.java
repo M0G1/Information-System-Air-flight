@@ -50,7 +50,7 @@ public class Flight implements Serializable {
     public Flight(Plane plane,
                   Airport departureAirport, Airport arrivalAirport,
                   Date dateDeparture, Date dateArrival) throws NullPointerException, IllegalArgumentException, DateTimeException {
-        checkOnNull(plane, "com/company/plane");
+        //checkOnNull(plane, "com/company/plane");
         checkOnNull(departureAirport, "departureAirport");
         checkOnNull(arrivalAirport, "arrivalAirport");
         checkOnNull(dateDeparture, "dateDeparture");
@@ -102,13 +102,13 @@ public class Flight implements Serializable {
 
     public void setDepartureAirport(Airport departureAirport) throws NullPointerException, IllegalArgumentException {
         checkOnNull(departureAirport, "departureAirport");
-        checkAirportEquals(this.arrivalAirport, departureAirport);
+        //checkAirportEquals(this.arrivalAirport, departureAirport);
         this.departureAirport = departureAirport;
     }
 
     public void setArrivalAirport(Airport arrivalAirport) throws NullPointerException, IllegalArgumentException {
         checkOnNull(arrivalAirport, "arrivalAirport");
-        checkAirportEquals(this.departureAirport, arrivalAirport);
+        //checkAirportEquals(this.departureAirport, arrivalAirport);
         this.arrivalAirport = arrivalAirport;
     }
 
@@ -187,9 +187,11 @@ public class Flight implements Serializable {
                 this.dateDeparture, this.dateArrival
         };
         for (int i = 0; i < fields.length; ++i) {
-            str.append(fields[i].toString());
-            if (i != fields.length - 1)
-                str.append(", ");
+            if (fields[i] != null) {
+                str.append(fields[i].toString());
+                if (i != fields.length - 1)
+                    str.append(", ");
+            }
         }
         str.append(')');
         return str.toString();

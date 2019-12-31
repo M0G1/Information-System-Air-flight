@@ -3,6 +3,7 @@ package com.company.view;
 import com.company.controllers.AirportController;
 import com.company.controllers.Repository;
 import com.company.model.Airport;
+import com.company.model.AirportList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,49 +52,93 @@ public class AirportView {
         return ans.toString();
     }
 
-    public static String update(String[] cmd, int i) {
-        /*ловим необходимость обовлять репозиторий*/
-        String err = ConsoleView.INCORRECT_CMD +  "Can not find Airport";
+    private static Object[] findListAndIndex(String[] cmd, int i) {
         index = i;
-        StringBuilder ans = new StringBuilder();
         for (; index < cmd.length && cmd[index].equals(""); ++index) ;
         //не понец массива
         if (cmd.length == index)
-            return err;
+            return null;
         List<Airport> lts = handler(cmd, index);
-        int updateValIndex = -1;
+        int valIndex = -1;
         if (lts == null)
-            return err;
+            return null;
 
         Scanner in = new Scanner(System.in);
+        if(lts.size() == 0)
+            return null;
         if (lts.size() == 1)
-            updateValIndex = 0;
+            valIndex = 0;
         if (lts.size() > 1) {
-            System.out.println(ConsoleView.toStringAnswer("Please enter index of updatable value(1,2,3...).", lts, "\n"));
+            System.out.println(ConsoleView.toStringAnswer("Please enter index of needed value(1,2,3...).", lts, "\n"));
             try {
-                updateValIndex = (in.nextInt() - 1);
+                valIndex = (in.nextInt() - 1);
                 if (in.ioException() != null)
                     throw in.ioException();
             } catch (IOException e) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
-                return err;
+                return null;
             }
         }
+        Object[] ans = {lts, valIndex};
+        return ans;
+    }
+
+    public static String update(String[] cmd, int i) {
+        /*ловим необходимость обовлять репозиторий*/
+        String err = ConsoleView.INCORRECT_CMD + "Can not find Airport";
+        Object[] ansArg = AirportView.findListAndIndex(cmd, i);
+
+        if (ansArg == null)
+            return err;
+
+        List<Airport> lts = (List) ansArg[0];
+        int valIndex = (Integer) ansArg[1];
+        Scanner in = new Scanner(System.in);
+        StringBuilder ans = new StringBuilder();
+        Airport airport;
+        String valStr;
+
+        airport = lts.get(valIndex);
 
         System.out.println("Enter the new name for Airport");
-        Airport airport = lts.get(updateValIndex);
-        String valStr = airport.toString();
+        valStr = airport.toString();
         airport.setName(in.next());
+
         ans.append(valStr);
         ans.append(" has changed on ");
         ans.append(airport.toString());
         return ans.toString();
     }
 
+
+    public static String delete(String[] cmd, int i) {
+        /*ловим необходимость обовлять репозиторий*/
+        String err = ConsoleView.INCORRECT_CMD + "Can not find Airport";
+        Object[] ansArg = AirportView.findListAndIndex(cmd, i);
+
+        if (ansArg == null)
+            return err;
+
+        List<Airport> lts = (List) ansArg[0];
+        int valIndex = (Integer) ansArg[1];
+        StringBuilder ans = new StringBuilder();
+
+        Airport airport = lts.get(valIndex);
+        if(AirportController.isAirportHaveFlight(airport))  //аэропорт имеет рейсы
+            return ConsoleView.INCORRECT_CMD + "Airport have a flight";
+        if( AirportList.getInstance().remove(airport))  //если успешно удалился
+            return airport.toString() + " delete\n";
+        return ConsoleView.INCORRECT_CMD;
+    }
+
     public static String info() {
         return "Поиск аэропорта. нужно написать Airport и после через пробел его название.\n" +
-                " Если такого нет, то выведет соответствующее сообщение";
+                " Если такого нет, то выведет соответствующее сообщение\n"+
+                " Удаление аэропорта возможно только если у него нет рейсов в будущем или активных"+
+                "  delete, а дальше такая же сигнатура как у поиска по рейсам\n"+
+                " Изменение названия аэропорта update, а дальше такая же сигнатура как у поиска по рейсам\n"+
+                " Создание аэропорта new Airport и название аэропорта\n";
     }
 
 }

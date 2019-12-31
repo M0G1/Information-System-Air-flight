@@ -2,8 +2,11 @@ package com.company.controllers;
 
 import com.company.model.Airport;
 import com.company.model.AirportList;
+import com.company.model.Flight;
+import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -34,7 +37,7 @@ public class AirportController {
     }
 
     public static List<Airport> getIf(Predicate<Airport> predicate) {
-        ArrayList<Airport> answer = new ArrayList<>();
+        ArrayList<Airport> answer = new ArrayList<>(0);
         for (Airport airport : list) {
             if (predicate.test(airport))
                 answer.add(airport);
@@ -49,6 +52,17 @@ public class AirportController {
             }
         }
         return null;
+    }
+
+    public static boolean isAirportHaveFlight(Airport airport){
+        if(airport == null)
+            return false;
+        Date curDate = new Date(System.currentTimeMillis());
+        Predicate<Flight> predicate = (flight) ->   //есть рейс и еще не вылетел из аэропорта. Или же не прилетел.
+                (flight.getArrivalAirport().equals(airport) && (curDate.before(flight.getDateDeparture()))) ||
+                        (flight.getDepartureAirport().equals(airport) && curDate.before(flight.getDateArrival()));
+        List<Flight> lst = FlightController.getIf(predicate);
+        return lst.size() != 0;
     }
 }
 

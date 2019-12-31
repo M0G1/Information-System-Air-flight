@@ -47,7 +47,7 @@ public class FlightController {
      * @return список с элементами удовлетворяющими предикату
      */
     public static List<Flight> getIf(Predicate<Flight> predicate) {
-        ArrayList<Flight> answer = new ArrayList<>();
+        ArrayList<Flight> answer = new ArrayList<>(0);
         for (Flight flight : list) {
             if (predicate.test(flight))
                 answer.add(flight);

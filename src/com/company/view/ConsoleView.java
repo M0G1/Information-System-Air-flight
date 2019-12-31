@@ -18,6 +18,7 @@ public class ConsoleView {
 
     private static boolean isNewInstance = false;
     private static boolean isUpdate = false;
+    private static boolean isDelete = false;
     private static int index;
 
     public static void setIndex(int index) {
@@ -39,35 +40,46 @@ public class ConsoleView {
         switch (cmd[index].toLowerCase()) {
             //просто добавить еще случаев
             case "flight": {
+                ++index;
                 if (isNewInstance)
-                    return FlightView.newInstance(cmd, ++index);
+                    return FlightView.newInstance(cmd, index);
                 else if (isUpdate)
-                    return FlightView.update(cmd, ++index);
-                return toStringAnswer("Flights", FlightView.handler(cmd, ++index), "\n");
+                    return FlightView.update(cmd, index);
+                else if (isDelete)
+                    return FlightView.delete(cmd, index);
+                return toStringAnswer("Flights", FlightView.handler(cmd, index), "\n");
             }
             case "airport": {
+                ++index;
                 if (isNewInstance)
-                    return AirportView.newInstance(cmd, ++index);
+                    return AirportView.newInstance(cmd, index);
                 else if (isUpdate)
-                    return AirportView.update(cmd, ++index);
+                    return AirportView.update(cmd, index);
+                else if (isDelete)
+                    return AirportView.delete(cmd, index);
 
-                return toStringAnswer("", AirportView.handler(cmd, ++index), "; ");
+                return toStringAnswer("", AirportView.handler(cmd, index), "; ");
             }
             case "help":
-            case "h": {
+            case "h":
+            case "info": {
                 return info();
             }
             case "new":
-            case "update": {
+            case "update":
+            case "delete": {
                 /*
                 newInstance() and update(), when returning string with error message.
                  Must begin with str INCORRECT_CMD.
                  Чтобы словить необходимость в перезагрузке репозитория.
                  */
-                if (cmd[index].equals("new"))
+                String cmdLowerCaseIndex = cmd[index].toLowerCase();
+                if (cmdLowerCaseIndex.equals("new"))
                     isNewInstance = true;
-                else
+                else if (cmdLowerCaseIndex.equals("update"))
                     isUpdate = true;
+                else
+                    isDelete = true;
                 ++index;
                 String ansStr = cmdHandler(cmd);
                 resetFlags();
@@ -85,6 +97,7 @@ public class ConsoleView {
     private static void resetFlags() {
         isNewInstance = false;
         isUpdate = false;
+        isDelete = false;
     }
 
 
