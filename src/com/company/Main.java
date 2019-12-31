@@ -130,7 +130,7 @@ public class Main {
         printList("Airports", AirportList.getInstance(), "\n");
         printList("Flight", FlightList.getInstance(), "\n");
         for (int i = 0; true; ++i) {
-            System.out.println("Write command or help");
+            System.out.println("Write command or help. Or press f to pay respect");
             Scanner scan = new Scanner(System.in);
             String fromCons = scan.nextLine();
             //System.out.println("FromCons " + fromCons);

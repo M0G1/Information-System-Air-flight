@@ -7,8 +7,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Repository {
-//=========================================== Static Fields=========================================================
+    //=========================================== Static Fields=========================================================
+    public static enum nLists {
+        FLIGHT,
+        AIRPORT;
+    }
 
     // порядок классов в файйле репозитории:
     private static List[] lists = {
@@ -24,6 +29,17 @@ public class Repository {
         File temp = repos;
         repos = newFile;
         return repos;
+    }
+
+    public static List getList(nLists val) {
+        switch (val) {
+            case FLIGHT:
+                return lists[0];
+            case AIRPORT:
+                return lists[1];
+            default:
+                return null;
+        }
     }
 
 //=========================================== Methods =========================================================
